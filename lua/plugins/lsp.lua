@@ -14,14 +14,53 @@ return {
 				end)(),
 			},
 			"saadparwaiz1/cmp_luasnip",
-
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-buffer",
+			{
+				"martineausimon/nvim-lilypond-suite",
+				opts = {},
+			},
 		},
 		config = function()
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
 			luasnip.config.setup({})
+
+			local lilypond_source = {}
+
+			function lilypond_source:is_available()
+				return vim.bo.filetype == "lilypond"
+			end
+
+			function lilypond_source:get_debug_name()
+				return "lilypond"
+			end
+
+			function lilypond_source:complete(params, callback)
+				local items = {}
+
+				local dict_path = vim.fn.expand("$LILYDICTPATH")
+				if dict_path and dict_path ~= "$LILYDICTPATH" then
+					local dict_files = vim.fn.glob(dict_path .. "/*", true, true)
+					for _, file in ipairs(dict_files) do
+						local lines = vim.fn.readfile(file)
+						for _, line in ipairs(lines) do
+							if line:match("%S") then -- Skip empty lines
+								table.insert(items, {
+									label = line:gsub("^%s*(.-)%s*$", "%1"), -- Trim whitespace
+									kind = cmp.lsp.CompletionItemKind.Text,
+									insertText = line:gsub("^%s*(.-)%s*$", "%1"),
+								})
+							end
+						end
+					end
+				end
+
+				callback({ items = items })
+			end
+
+			cmp.register_source("lilypond", lilypond_source)
 
 			cmp.setup({
 				snippet = {
@@ -49,11 +88,22 @@ return {
 						end
 					end, { "i", "s" }),
 				}),
-				sources = {
+				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
+					{ name = "lilypond" },
 					{ name = "path" },
-				},
+					{ name = "buffer" },
+				}),
+			})
+
+			cmp.setup.filetype("lilypond", {
+				sources = cmp.config.sources({
+					{ name = "lilypond" },
+					{ name = "luasnip" },
+					{ name = "path" },
+					{ name = "buffer" },
+				}),
 			})
 		end,
 	},
