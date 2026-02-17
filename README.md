@@ -32,6 +32,10 @@ lua/plugins/          # Plugin specs
 - **wakatime** - Coding activity tracking
 - **brainrot** - Brainrot
 
+## Keybindings
+
+See [KEYBINDINGS.md](KEYBINDINGS.md) for a full cheat sheet.
+
 ## Requirements
 
 - Neovim >= 0.9
