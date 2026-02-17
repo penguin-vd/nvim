@@ -37,3 +37,18 @@ lua/plugins/          # Plugin specs
 - Neovim >= 0.9
 - Git
 - A [Nerd Font](https://www.nerdfonts.com/) (optional, for icons)
+
+## Install
+
+Back up your existing config (if any), then clone:
+
+```bash
+mv ~/.config/nvim ~/.config/nvim.bak
+git clone https://github.com/penguin-vd/nvim.git ~/.config/nvim
+```
+
+Open Neovim and plugins will install automatically on first launch:
+
+```bash
+nvim
+```
