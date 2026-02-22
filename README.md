@@ -17,7 +17,7 @@ lua/plugins/          # Plugin specs
 ## Plugins
 
 - **colorscheme** - Rose Pine (Moon)
-- **telescope** - Fuzzy finder
+- **finder** - Fuzzy finder (fff.nvim + Snacks picker)
 - **treesitter** - Syntax highlighting
 - **lsp** - Language server support
 - **harpoon** - Quick file navigation
@@ -48,10 +48,9 @@ External tools required or used by plugins:
 | [clangd](https://clangd.llvm.org/) | lspconfig | C/C++ language server |
 | [Flutter SDK](https://flutter.dev/) | flutter-tools | Flutter development |
 | [LilyPond](https://lilypond.org/) | nvim-lilypond-suite | Music notation |
-| `make` / C compiler | telescope-fzf-native, LuaSnip | Native FZF sorter + jsregexp (build steps) |
+| `make` / C compiler | LuaSnip | jsregexp (build step) |
+| [Rustup](https://rustup.rs/) | fff.nvim | Fuzzy finder (build step) |
 | [WakaTime CLI](https://wakatime.com/) | vim-wakatime | Coding activity tracking (requires API key) |
-| [ripgrep](https://github.com/BurntSushi/ripgrep) | telescope (live_grep) | Live grep search |
-| [fd](https://github.com/sharkdp/fd) | telescope (find_files) | Fast file finder (optional, improves performance) |
 
 > `mason.nvim` can auto-install `stylua` and `clangd` for you.
 

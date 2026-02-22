@@ -1,8 +1,11 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
-	opts = {
-		ensure_installed = {
+	lazy = false,
+	config = function()
+		local TS = require("nvim-treesitter")
+
+		local ensure_installed = {
 			"bash",
 			"c",
 			"cpp",
@@ -14,18 +17,36 @@ return {
 			"markdown",
 			"vim",
 			"vimdoc",
-		},
-		auto_install = true,
-		highlight = {
-			enable = true,
-			additional_vim_regex_highlighting = { "ruby" },
-		},
-		indent = { enable = true, disable = { "ruby" } },
-	},
-	config = function(_, opts)
-		require("nvim-treesitter.install").prefer_git = true
+		}
 
-		---@diagnostic disable-next-line: missing-fields
-		require("nvim-treesitter.configs").setup(opts)
+		-- Install missing parsers
+		local installed = TS.get_installed()
+		local to_install = vim.tbl_filter(function(lang)
+			return not vim.tbl_contains(installed, lang)
+		end, ensure_installed)
+		if #to_install > 0 then
+			TS.install(to_install, { summary = true })
+		end
+
+		-- Auto-install & enable highlighting on FileType
+		local available = TS.get_available()
+		vim.api.nvim_create_autocmd("FileType", {
+			callback = function(ev)
+				local lang = vim.treesitter.language.get_lang(ev.match)
+				if not lang then
+					return
+				end
+
+				-- Auto-install missing parser if available
+				if not vim.tbl_contains(TS.get_installed(), lang) then
+					if vim.tbl_contains(available, lang) then
+						TS.install({ lang })
+					end
+					return
+				end
+
+				pcall(vim.treesitter.start, ev.buf)
+			end,
+		})
 	end,
 }
