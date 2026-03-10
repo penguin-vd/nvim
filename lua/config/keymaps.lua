@@ -15,3 +15,16 @@ vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus left" })
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus right" })
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus down" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus up" })
+
+-- Copy current file path
+vim.keymap.set("n", "<leader>fp", function()
+	local path = vim.fn.expand("%:p")
+	vim.fn.setreg("+", path)
+	print("Copied: " .. path)
+end, { desc = "Copy file path" })
+
+vim.keymap.set("n", "<leader>rp", function()
+	local path = vim.fn.expand("%:.")
+	vim.fn.setreg("+", path)
+	print("Copied: " .. path)
+end, { desc = "Copy relative file path" })

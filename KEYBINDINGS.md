@@ -18,17 +18,16 @@ Leader key: `Space`
 | `<leader>e` | Show diagnostic float |
 | `<leader>q` | Diagnostic quickfix list |
 
-## Telescope
+## Finder
 
 | Key | Action |
 |-----|--------|
 | `<leader>sf` | Search files |
 | `<leader>sg` | Search with grep |
 | `<leader>sk` | Search keymaps |
-| `<leader>ss` | Search Telescope builtins |
 | `<leader>sd` | Search diagnostics |
-| `<leader><leader>` | Find open buffers |
-| `<leader>/` | Fuzzy search current buffer |
+| `fz` | Fuzzy grep |
+| `fc` | Search current word |
 
 ## LSP
 

@@ -6,6 +6,22 @@ return {
 		opts = {
 			picker = { enabled = true },
 		},
+		keys = {
+			{
+				"<leader>sk",
+				function()
+					Snacks.picker.keymaps()
+				end,
+				desc = "Search keymaps",
+			},
+			{
+				"<leader>sd",
+				function()
+					Snacks.picker.diagnostics()
+				end,
+				desc = "Search diagnostics",
+			},
+		},
 	},
 	{
 		"dmtrKovalenko/fff.nvim",
